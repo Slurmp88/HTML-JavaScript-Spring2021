@@ -1,0 +1,41 @@
+.centerDiv{
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#SecondHeader{
+    color: blue;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-decoration: underline;
+}
+
+body{
+    background-color: aquamarine;
+    background-image: url("images/repeatingtexture.jpg");
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+}
+
+a:link{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+a:visited{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+
+a:hover{
+    border: none;
+    color:blue;
+}
+
+a:active{
+    color: yellow;
+}
