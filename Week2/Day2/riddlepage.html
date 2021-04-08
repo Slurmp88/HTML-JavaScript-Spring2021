@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Div Lab</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div id="container">
+        <div id="header">
+            <h1>Welcome to the Div Lab</h1>
+        </div>
+        <div id="nav">
+            <a class="navBtn" href="divLab.html">Home</a>
+            <a class="navBtn" href="">Bio</a>
+            <a class="navBtn" href="">Games</a>
+            <a class="navBtn" href="">Riddles</a>
+        </div>
+        <div id="content">
+            <div id="riddles">
+                <h2>What is black and white and read all over</h2>
+                <button onclick="showAnswer(0,'answer1')" id="riddle1">Show Answer</button>
+                <span id="answer1"></span>
+                <h2>What has 4 letters never has 5 sometimes has 9 and always has 6</h2>
+                <button onclick="showAnswer(1,'answer2')" id="riddle1">Show Answer</button>
+                <span id="answer2"></span>
+            </div>
+        </div>
+
+        <div id="footer">
+            &copy;2021 Sam Rubin HTML JavaScript Class
+        </div>
+    </div>
+</body>
+<script src="JS/script.js"></script>
+</html>
