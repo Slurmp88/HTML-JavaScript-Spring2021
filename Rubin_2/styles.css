@@ -1,15 +1,81 @@
-#container{
 
+html,body{
+    margin:0px;
+    height:auto;
+    display: flex;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color:rgb(252, 189, 18);
+    width:100%;
+}
+
+.nodotlist{
+    list-style: none;
+    padding-right:10px;
+    text-decoration: none;
+}
+
+#container{
+    width:970px;
+    padding: 10px;
+    height:100%;
+    text-align: center;
+    background-color: white;
+    justify-content: center;
+}
+
+.btn:link{
+    color:black;
+    text-decoration: none;
+    padding-left:20px;
+    padding-right:20px;
+    line-height: 50px;
+}
+
+.btn:visited{
+    color:black;
+}
+
+.btn:hover{
+    background-color:  rgb(218, 160, 0);
 }
 
 .btn{
-
+    background-color:  rgb(252, 189, 18);
+    padding: 10px;
 }
 
 .navBar{
-
+    width: 950px;
+    height:50px;
+    background-color: rgb(252, 189, 18);
+    text-align: center;
+    margin:10px;
+    border:black solid 5px;
+    line-height: 50px;
 }
 
 .sections{
-    
+    width:950px;
+    height:50px;
+    background-color:rgb(252, 189, 18);
+    margin:10px;
+    border:black solid 5px; 
+    line-height: 50px;
+}
+
+.imageBorder{
+    border:black solid 5px;
+    width: 500px;
+}
+
+#footer{
+    line-height: 25px;
+    text-align: center;
+    border-bottom: 1px solid silver;
+    border-top: 1px solid silver;
+    padding-top:10px;
+    padding-bottom:10px;
+    bottom:0px;
+    width:950px;
 }
