@@ -1,0 +1,74 @@
+body,html{
+    display: flex;
+    justify-content: center;
+    background-color: grey;
+}
+
+#main-container{
+    width:980px;
+    margin:10px;
+}
+
+header{
+    width:960px;
+    height: 50px;
+    padding: 10px;
+    background-color: rgb(0, 0, 0);
+    color:white;
+    text-align: center;
+    line-height: 50px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+h1{
+    margin:0px;
+    padding:0px;
+}
+
+nav{
+    width:980px;
+    height:50px;
+    background-color: black;
+    border-top:1px solid white;
+    display: flex;
+    justify-content: center;
+}
+
+.btn{
+    width:100px;
+    height:50px;
+    background-color:rgb(103, 154, 204);
+    color:white;
+    text-decoration: none;
+    margin-right:5px;
+    text-align:center;
+    line-height: 50px;
+    font-family:'Quicksand', sans-serif;
+}
+
+.btn:hover{
+    background-color:rgb(114, 111, 138); 
+}
+
+section{
+    width:600px;
+    padding:10px;
+    float:left;
+}
+
+aside{
+    width:340px;
+    padding:10px;
+    float: right;
+}
+
+footer{
+    clear:both;
+    width:980px;
+}
+.title{
+    background-color:rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    font-family: 'Quicksand', sans-serif;
+    padding:5px,5px,5px,5px;
+}

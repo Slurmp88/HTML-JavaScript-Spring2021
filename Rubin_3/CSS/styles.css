@@ -1,0 +1,117 @@
+
+.neon-wrapper {
+    box-shadow:
+    0 0 0.1vw  0.4vw #fff7f7,   
+    0 0 0.4vw  0.6vw #e972d9, 
+    0 0   4vw  0.4vw #e50bda,
+    inset 0 0 1.5vw  0.4vw #e50bda,
+    inset 0 0 0.4vw  0.2vw #e972d9,
+    inset 0 0 0.5vw  0.2vw #fff7f7;
+    border-radius: 5px;
+  }
+
+.neon-text{
+    text-shadow: 
+    .25vw 0vw .25vw #d8faff, 
+    .1vw 0vw   0vw #57d3f2, .17vw 0vw   0vw #57d3f2, .25vw 0vw   0vw #57d3f2,
+    .1vw 0vw  .1vw #57e0f2, .17vw 0vw  .1vw #57e0f2, .25vw 0vw  .1vw #57e0f2,
+    .1vw 0vw   2vw #57f2f2, .17vw 0vw   2vw #57f2f2, .25vw 0vw   2vw #57f2f2;
+}
+
+h1{
+    font-size:60px;
+    color:transparent;
+    font-family:'Quicksand',sans-serif;
+    margin:0px;
+    padding:0px;
+    padding-top:10px;
+}
+
+h2{
+    font-size:30px;
+    color:transparent;
+    font-family:'Quicksand',sans-serif;
+    margin:0px;
+    padding:0px;
+    padding-top:20px;
+}
+
+body{
+    background-image: url(vaporwave.jpg)
+}
+
+body,html{
+    display:flex;
+    justify-content: center;
+}
+
+#main-body{
+    width:1000px;
+    height:auto;
+    background-color:transparent;
+}
+
+nav{
+    width:950px;
+    height:200px;
+    padding:0px;
+    margin:40px auto 0 auto;
+    background-color: black;
+    line-height:100px;
+    text-align: center;
+}
+
+.navBtn{
+    width:100px;
+    height:50px;
+    text-align: center;
+    font-size: 30px;
+    margin: 10px;
+    color:transparent;
+    font-family: 'Quicksand' ,sans-serif;
+    text-decoration: none;
+    text-shadow: 
+    .1vw 0vw .25vw #d8faff, .2vw 0vw .25vw #d8faff, .25vw 0vw .25vw #d8faff, 
+    .1vw 0vw   0vw #57d3f2, .2vw 0vw   0vw #57d3f2, .25vw 0vw   0vw #57d3f2,
+    .1vw 0vw  .1vw #57e0f2, .2vw 0vw  .1vw #57e0f2, .25vw 0vw  .1vw #57e0f2,
+    .1vw 0vw   2vw #57f2f2, .2vw 0vw   2vw #57f2f2, .25vw 0vw   2vw #57f2f2;
+}
+
+.navBtn:hover{
+    text-shadow: 
+    .1vw 0vw .25vw #839092, .2vw 0vw .25vw #949ea0, .25vw 0vw .25vw #898d8d, 
+    .1vw 0vw   0vw #57d3f2, .2vw 0vw   0vw #57d3f2, .25vw 0vw   0vw #57d3f2,
+    .1vw 0vw  .1vw #57e0f2, .2vw 0vw  .1vw #57e0f2, .25vw 0vw  .1vw #57e0f2,
+    .1vw 0vw   2vw #57f2f2, .2vw 0vw   2vw #57f2f2, .25vw 0vw   2vw #57f2f2;
+}
+
+#content{
+    width:500px;
+    height:auto;
+    margin: 40px 40px 40px 40px;
+    padding-bottom: 40px;
+    background-color: black;
+    text-align: center;
+    float:left;
+}
+
+aside{
+    width: 300px;
+    height: auto;
+    background-color: black;
+    float:left;
+    margin: 40px 40px 40px 40px;
+    padding-bottom: 40px;
+    text-align: center;
+}
+
+p{
+    text-align: left;
+    font-family: 'Quicksand' ,sans-serif;
+    color:transparent;
+    margin:20px;
+    text-indent: 20px;
+    text-shadow: .1vw 0vw   .1vw #57d3f2, .1vw 0vw   .1vw #57d3f2, .1vw 0vw   0vw #57d3f2,
+    .1vw 0vw  .1vw #57e0f2, .1vw 0vw  .1vw #57e0f2, .1vw 0vw  .1vw #57e0f2,
+    .1vw 0vw   .1vw #57f2f2, .1vw 0vw  .1vw #57f2f2, .1vw 0vw   .1vw #57f2f2;
+}
