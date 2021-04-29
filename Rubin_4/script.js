@@ -3,14 +3,14 @@ var canvas1 = document.getElementById('canvas1');
 //Define Drawing Context of canvas element
 var ctx = canvas1.getContext('2d');
 
-ctx.fillStyle = 'yellow';
+//ctx.fillStyle = 'yellow';
 ctx.strokeStyle = 'black';
 ctx.lineWidth = '5'
 ctx.fillRect(85, 300, 100, 100);
 ctx.strokeRect(85, 300, 100, 100);
 
 ctx.strokeStyle = '#00ffff';
-ctx.fillStyle = '#ff00ff';
+//ctx.fillStyle = 'blue';
 ctx.moveTo(557,309);
 ctx.lineTo(667,285);
 ctx.lineTo(725,385);
@@ -23,6 +23,22 @@ ctx.fill();
 ctx.strokeStyle = 'rgb(255,0,0)'
 ctx.moveTo(85,685);
 ctx.lineTo(280,550);
+ctx.stroke();
+
+ctx.fillStyle = 'blue';
+ctx.strokeStyle = 'rgb(32,32,32)';
+ctx.moveTo(635, 499);
+ctx.lineTo(665, 555);
+ctx.lineTo(735,568);
+ctx.lineTo(686,616);
+ctx.lineTo(696,683);
+ctx.lineTo(635,655);
+ctx.lineTo(577,683);
+ctx.lineTo(583,615);
+ctx.lineTo(540,563);
+ctx.lineTo(605,553);
+ctx.lineTo(635,499);
+ctx.fill();
 ctx.stroke();
 
 
@@ -38,18 +54,3 @@ ctx.fill();
 ctx.stroke();
 
 
-ctx.fillStyle = '#ffff00';
-ctx.strokeStyle = 'rgb(32,32,32)';
-ctx.moveTo(635, 499);
-ctx.lineTo(665, 555);
-ctx.lineTo(735,568);
-ctx.lineTo(686,616);
-ctx.lineTo(696,683);
-ctx.lineTo(635,655);
-ctx.lineTo(577,683);
-ctx.lineTo(583,615);
-ctx.lineTo(540,563);
-ctx.lineTo(605,553);
-ctx.lineTo(635,499);
-ctx.fill();
-ctx.stroke();
