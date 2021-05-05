@@ -1,0 +1,9 @@
+html, body{
+    display:flex;
+    justify-content: center;
+}
+
+#canvas{
+    background-color: black;
+    border: 1px solid black;
+}

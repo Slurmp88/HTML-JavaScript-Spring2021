@@ -9,14 +9,15 @@ var fps = 60;
 var frames = fps;
 //Vars
 var xpos = 20;
-var start = 50;
-var finish = 750;
+var start = 58;
+var finish = 956;
+var speed = 1;
 //gamestate
 var gameOver = true;
 //fuel?
-var startFuel = randNumber(600, canvas.width + 100);;
+var startFuel = randNumber(700, canvas.width - 50);;
 var fuel = startFuel;
-var fullBarWidth = 300;
+var fullBarWidth = 512;
 //Image Vars
 var car = new Image();
 car.src = 'images/car.png';
@@ -37,7 +38,7 @@ function main(){
     if(gameOver)
     {
         ctx.fillStyle = "black"
-        ctx.font = "30px Arial"
+        ctx.font = "30px Helvetica"
         ctx.textAlign = "center"
         ctx.fillText("Press 'Space' to Start", canvas.width/2, canvas.height/2) 
     }
@@ -53,8 +54,8 @@ function main(){
         else{
             if(!gameOver && fuel > 0 && seconds <= 0)
             {
-                    fuel--;
-                    xpos++;
+                    fuel -= speed;
+                    xpos += speed;
             }
         }
     }
@@ -67,7 +68,7 @@ function main(){
     drawFuelBar()    
     
     //Check if game is over
-    if(xpos > finish + 10 || fuel <= 0)
+    if(xpos > finish + 15 || fuel <= 0)
     {
         drawResults();
     }
@@ -85,6 +86,12 @@ function keyPressDown(e)
         }
         gameOver = false;
         //document.removeEventListener("keydown", keyPressDown);
+    }
+    else if(e.keyCode == 39){
+        speed = 3;
+    }
+    else if(e.keyCode == 37){
+        speed = 1;
     }
     console.log(e.keyCode);
 }   
@@ -131,7 +138,7 @@ function drawFuelBar(){
 function drawFuelText()
 {
     ctx.fillStyle = "Black";
-    ctx.font = "25px Arial";
+    ctx.font = "25px Helvetica";
     ctx.fillText(fuel, start, 30);
 }
 
@@ -147,7 +154,7 @@ function runStartTimer()
 
 function drawStartTimer(){
     ctx.fillStyle = "Black";
-    ctx.font = "25px Arial";
+    ctx.font = "25px Helvetica";
     ctx.textAlign = "center";
     ctx.fillText(seconds, canvas.width/2, canvas.height/2);
 }
@@ -160,9 +167,9 @@ function drawResults()
 {
     if(xpos > finish){
         ctx.fillStyle = "Black";
-        ctx.font = "25px Arial";
+        ctx.font = "25px Helvetica";
         ctx.textAlign = "center";
-        ctx.fillText("You made it to the finish", canvas.width/2, canvas.height/2);
+        ctx.fillText("You made it to the finish!", canvas.width/2, canvas.height/2);
     }
     else
     {
