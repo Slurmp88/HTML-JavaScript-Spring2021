@@ -2,13 +2,12 @@ var canvas = document.getElementById('canvas');
 ctx = canvas.getContext('2d');
 
 var timer = requestAnimationFrame(main);
-
-//countdown Vars
+//countdown Var
 var seconds = 3;
 var fps = 60;
 var frames = fps;
 //Vars
-var xpos = 20;
+var xpos = 10;
 var start = 58;
 var finish = 956;
 var speed = 1;
@@ -19,8 +18,16 @@ var startFuel = randNumber(700, canvas.width - 50);;
 var fuel = startFuel;
 var fullBarWidth = 512;
 //Image Vars
+
+var background = new Image();
+background.src = "images/Background.png";
+background.onload = function()
+{
+    main();
+}
+
 var car = new Image();
-car.src = 'images/car.png';
+car.src = 'images/car2.png';
 car.onload = function(){
     main();
 }
@@ -34,20 +41,20 @@ function main(){
     timer = requestAnimationFrame(main);
     //clear Canvas
     ctx.clearRect(0,0,canvas.width, canvas.height);
-
+    ctx.drawImage(background, 0, 0, 1080, 786);
     if(gameOver)
     {
-        ctx.fillStyle = "black"
-        ctx.font = "30px Helvetica"
+        ctx.fillStyle = "#FFFFFF"
+        ctx.font = "30px Quicksand;"
         ctx.textAlign = "center"
-        ctx.fillText("Press 'Space' to Start", canvas.width/2, canvas.height/2) 
+        ctx.fillText("Press 'Space' to Start, Use right arrow and left arrow to  change speed", canvas.width/2, canvas.height/2) 
     }
     else
     {
         //timer
         if(!gameOver && seconds > 0)
         {
-            
+            ctx.drawImage(background, 0, 0, 1080, 786);
             runStartTimer();
             drawStartTimer();
         }
@@ -61,6 +68,7 @@ function main(){
     }
     
     //Draw Stuff.
+
     drawFuelText();
     drawFinishLine();
     drawStartLine();
@@ -72,6 +80,21 @@ function main(){
     {
         drawResults();
     }
+}
+
+function drawStartTimer(){
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "25px Quicksand white";
+    ctx.textAlign = "center";
+    ctx.fillText(seconds, canvas.width/2, canvas.height/2);
+}
+
+
+function drawFuelText()
+{
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "25px Arial";
+    ctx.fillText(fuel, start - 30, 55);
 }
 
 //key code is getting the key log for individual buttons
@@ -108,17 +131,17 @@ function keyUp(e)
 function drawStartLine()
 {
     ctx.fillStyle = "green";
-    ctx.fillRect(start, 50, 10, 500);
+    ctx.fillRect(start, 250, 10, 300);
 }
 
 function drawFinishLine(){
     ctx.fillStyle = "red";
-    ctx.fillRect(finish, 50, 10, 500);
+    ctx.fillRect(finish, 250, 10, 300);
 }
 
 function drawCar(){
     //draw "car"
-    ctx.drawImage(car, xpos + 10, canvas.height/2, -30, 20);
+    ctx.drawImage(car, xpos + 30, canvas.height/2, -30, 20);
 }
 
 function getFuelPercentage(){
@@ -127,19 +150,12 @@ function getFuelPercentage(){
 
 function drawFuelBar(){
     var barWidth = fullBarWidth * getFuelPercentage();
-    ctx.fillStyle = "black";
-    ctx.fillRect(start, 30, fullBarWidth, 10);
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(start, 30, fullBarWidth, 30);
     if(fuel > 0){
         ctx.fillStyle = "red";
-        ctx.fillRect(start, 30, barWidth, 10);
+        ctx.fillRect(start, 30, barWidth, 30);
     }
-}
-
-function drawFuelText()
-{
-    ctx.fillStyle = "Black";
-    ctx.font = "25px Helvetica";
-    ctx.fillText(fuel, start, 30);
 }
 
 function runStartTimer()
@@ -152,13 +168,6 @@ function runStartTimer()
     }
 }
 
-function drawStartTimer(){
-    ctx.fillStyle = "Black";
-    ctx.font = "25px Helvetica";
-    ctx.textAlign = "center";
-    ctx.fillText(seconds, canvas.width/2, canvas.height/2);
-}
-
 function randNumber(high, low){
     return Math.round(Math.random() * (high - low) + low);
 }
@@ -166,8 +175,8 @@ function randNumber(high, low){
 function drawResults()
 {
     if(xpos > finish){
-        ctx.fillStyle = "Black";
-        ctx.font = "25px Helvetica";
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "25px Quicksand";
         ctx.textAlign = "center";
         ctx.fillText("You made it to the finish!", canvas.width/2, canvas.height/2);
     }
