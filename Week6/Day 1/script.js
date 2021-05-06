@@ -17,7 +17,7 @@ function randRange(High, Low){
 
 function GameObj(){
     //These are examples of properties in a class
-    this.radius = randRange(50, 30);
+    this.radius = randRange(200, 100);
     //This is an object literal it is the shit.
     this.color = `rgb(${randRange(0,255)}, ${randRange(0,255)}, ${randRange(0,255)})`;
     this.x = canvas.width * .5//randRange(canvas.width, 0);
@@ -80,7 +80,7 @@ function GameObj(){
 //particle.drawCircle();
 
 //creating an array of particles :)
-var numParticles = 10;
+var numParticles = 1;
 var particles = [];
 for(var i = 0; i < numParticles; i++){
     particles[i] = new GameObj();
@@ -95,7 +95,7 @@ function main()
     {
         particles[i].vy += gravity;
         particles[i].move();
-        particles[i].drawCircle();
+        particles[i].drawSquare();
         particles[i].drawImage()
     }
     timer = requestAnimationFrame(main);
