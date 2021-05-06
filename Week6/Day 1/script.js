@@ -1,19 +1,29 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
+var gravity = 0;
+var friction = 1;
+
+var cageImg = new Image();
+cageImg.src = "images/cage.png";
+cageImg.onload = function(){
+    main();
+}
+
+
 function randRange(High, Low){
     return Math.random() * (High - Low) + Low;
 }
 
 function GameObj(){
     //These are examples of properties in a class
-    this.radius = randRange(1, 1);
+    this.radius = randRange(50, 30);
     //This is an object literal it is the shit.
     this.color = `rgb(${randRange(0,255)}, ${randRange(0,255)}, ${randRange(0,255)})`;
-    this.x = randRange(canvas.width, 0);
-    this.y = randRange(canvas.height, 0);
-    this.vx = randRange(5, -5);
-    this.vy = randRange(5, -5);
+    this.x = canvas.width * .5//randRange(canvas.width, 0);
+    this.y = canvas.height* .5//randRange(canvas.height, 0);
+    this.vx = randRange(10, -10);
+    this.vy = randRange(10, -10);
 
     //this is an example of a method in a class
     this.drawCircle = function(){
@@ -24,15 +34,42 @@ function GameObj(){
         ctx.fill();
     }
 
+    this.drawSquare = function()
+    {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x - (this.radius), this.y - (this.radius), this.radius * 2, this.radius * 2)
+    }
+
+    this.drawImage = function()
+    {
+        ctx.drawImage(cageImg, this.x - (this.radius), this.y - (this.radius), this.radius * 2, this.radius * 2)
+    }
+    //this handles movement
     this.move = function()
     {
         this.x += this.vx;
         this.y += this.vy;
-        if(this.y > canvas.height - this.radius || this.y < -this.radius){
-            this.vy = this.vy * -1;
+
+        if(this.y > canvas.height - this.radius){
+            this.y = canvas.height - this.radius;
+            this.vy = -this.vy * friction;
         }
-        if(this.x > canvas.width - this.radius || this.x < -this.radius){
-            this.vx = this.vx * -1;
+        if(this.y < this.radius){
+            this.y = this.radius;
+            this.vy = -this.vy * friction;
+        }
+
+        //left
+        if(this.x < this.radius)
+        {
+            this.x = this.radius;
+            this.vx = -this.vx * friction;
+        }
+        //right
+        if(this.x > canvas.width - this.radius)
+        {
+            this.x = canvas.width - this.radius;
+            this.vx = -this.vx * friction;
         }
     }
 }
@@ -43,8 +80,7 @@ function GameObj(){
 //particle.drawCircle();
 
 //creating an array of particles :)
-var numParticles = 100;
-
+var numParticles = 10;
 var particles = [];
 for(var i = 0; i < numParticles; i++){
     particles[i] = new GameObj();
@@ -52,42 +88,15 @@ for(var i = 0; i < numParticles; i++){
 
 //Object literal is jesus
 var timer = requestAnimationFrame(main);
-function main(){
+function main()
+{
     ctx.clearRect(0,0, canvas.width, canvas.height);
     for(var i = 0; i < particles.length; i++)
     {
-        for(j = 0; j < particles.length; j++)
-        {
-            if(particles[i].x != particles[j.x] && particles[i].y != particles[j.y])
-            {
-                break;
-            }
-            else{
-                this.vy = this.vy * -1;
-                this.vx = this.vx * -1;
-            }
-        }
-    }
-
-    for(var i = 0; i < particles.length; i++)
-    {
+        particles[i].vy += gravity;
         particles[i].move();
         particles[i].drawCircle();
+        particles[i].drawImage()
     }
     timer = requestAnimationFrame(main);
-}
-
-for(var i = 0; i < particles.length; i++)
-{
-    for(j = 0; j < particles.length; j++)
-    {
-        if(particles[i].x != particles[j.x] && particles[i].y != particles[j.y])
-        {
-            break;
-        }
-        else{
-            this.vy = this.vy * -1;
-            this.vx = this.vx * -1;
-        }
-    }
 }
