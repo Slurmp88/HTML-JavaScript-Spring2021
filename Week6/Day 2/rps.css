@@ -7,3 +7,8 @@ html,body,nav{
     width:1000px;
     border: 1px solid black;
 }
+
+#canvasCenter{
+    display: flex;
+    justify-content: center;
+}
