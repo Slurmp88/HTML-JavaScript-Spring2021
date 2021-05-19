@@ -7,9 +7,15 @@ var timer = requestAnimationFrame(main);
 var ship;
 ship = new PlayerShip();
 
+//Game States
+var gameStates = [];
+var currentState = 0;
+var gameOver = true;
+
 //astroids
 var numAsteroids = 20;
 var asteroids = [];
+
 
 function randRange(high, low){
     return Math.random() * (high - low) + low;
@@ -44,32 +50,54 @@ document.addEventListener("keydown",pressKeyDown);
 document.addEventListener("keyup",getKeyUp);
 
 function pressKeyDown(e){
-    if(e.keyCode == 65 || e.keyCode == 37){
-        ship.left = true;
+    if(!gameOver)
+    {
+        if(e.keyCode == 65 || e.keyCode == 37){
+            ship.left = true;
+        }
+        if(e.keyCode == 68 || e.keyCode == 39){
+            ship.right = true;
+        }
+        if(e.keyCode == 83 || e.keyCode == 40){
+            ship.down = true;
+        }
+        if(e.keyCode == 87 || e.keyCode == 38){
+            ship.up = true;
+        }
     }
-    if(e.keyCode == 68 || e.keyCode == 39){
-        ship.right = true;
-    }
-    if(e.keyCode == 83 || e.keyCode == 40){
-        ship.down = true;
-    }
-    if(e.keyCode == 87 || e.keyCode == 38){
-        ship.up = true;
+    if(gameOver)
+    {
+        if(e.keyCode == 32)
+        {
+            if(currentState == 2)
+            {
+                currentState = 0;
+                main();
+            }
+            else{
+                currentState = 1;
+                gameOver = false;
+                main();
+            }
+        }
     }
 }
 
 function getKeyUp(e){
-    if(e.keyCode == 65 || e.keyCode == 37){
-        ship.left = false;
-    }
-    if(e.keyCode == 68 || e.keyCode == 39){
-        ship.right = false;
-    }
-    if(e.keyCode == 83 || e.keyCode == 40){
-        ship.down = false;
-    }
-    if(e.keyCode == 87 || e.keyCode == 38){
-        ship.up = false;
+    if(!gameOver)
+    {
+        if(e.keyCode == 65 || e.keyCode == 37){
+            ship.left = false;
+        }
+        if(e.keyCode == 68 || e.keyCode == 39){
+            ship.right = false;
+        }
+        if(e.keyCode == 83 || e.keyCode == 40){
+            ship.down = false;
+        }
+        if(e.keyCode == 87 || e.keyCode == 38){
+            ship.up = false;
+        }
     }
 }
 
@@ -152,11 +180,20 @@ function PlayerShip(){
         }
     }
 }
-
-function main(){
-    //clear Canvas
-    ctx.clearRect(0,0,canvas.width,canvas.height)
-
+//Main Screen
+gameStates[0] = function(){
+    ctx.save();
+    ctx.font = "60px Arial"
+    ctx.fillStyle = "white"
+    ctx.textAlign = "center"
+    ctx.fillText('Asteroid Avoider', canvas.width/2,canvas.height/2-60)
+    ctx.font = "20px Arial"
+    ctx.fillText('Press Space to Play', canvas.width/2,canvas.height/2)
+    ctx.restore();
+}
+//Game Screen 
+gameStates[1] = function()
+{
     //VERT
     if(ship.up){
         ship.vy = -8;
@@ -182,17 +219,60 @@ function main(){
     //Spawn Asteroids
     for(var i = 0; i < asteroids.length; i++)
     {
+        var dx = ship.x - asteroids[i].x;
+        var dy = ship.y - asteroids[i].y;
+        var distance = Math.sqrt((dx * dx) + (dy * dy));
+        
+        if(detectCollision(distance, (ship.h/2 + asteroids[i].radius))){
+            console.log("hit asteroid")
+            gameOver = true;
+            currentState = 2;
+            main();
+        }
+
         if(asteroids[i].y > canvas.height + asteroids[i].radius)
         {
             asteroids[i].x = randRange(canvas.width - asteroids[i].radius, asteroids[i].radius);
             asteroids[i].y = randRange(canvas.height - asteroids[i].radius, asteroids[i].radius) - canvas.height;
         }
-        asteroids[i].y += asteroids[i].vy;
-        asteroids[i].drawAsteroid();
+        if(!gameOver)
+        {
+            asteroids[i].y += asteroids[i].vy;
+            asteroids[i].drawAsteroid();
+        }
     }
+    if(!gameOver)
+    {
+        ship.move();
+        ship.drawShip();
+    }
+}
+//Game Over
+gameStates[2] = function(){
+    ctx.save();
+    ctx.font = "60px Arial"
+    ctx.fillStyle = "white"
+    ctx.textAlign = "center"
+    ctx.fillText('You Died', canvas.width/2,canvas.height/2-60)
+    ctx.font = "20px Arial"
+    ctx.fillText('Press Space to return to main menu', canvas.width/2,canvas.height/2)
+    ctx.restore();
+}
 
-    ship.move();
-    ship.drawShip();
+function main()
+{
+    //clear Canvas
+    ctx.clearRect(0,0,canvas.width,canvas.height)
+
+    //Call Game State
+    gameStates[currentState]()
+
     //Reset Window
-    timer = requestAnimationFrame(main);
+    if(!gameOver){
+        timer = requestAnimationFrame(main);
+    }
+}
+
+function detectCollision(distance, calcDistance){
+    return distance < calcDistance;
 }

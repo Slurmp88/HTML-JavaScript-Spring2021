@@ -8,8 +8,17 @@ rps[0] = "Rock";
 rps[1] = "Paper";
 rps[2] = "Scissors"
 
+var rock = new Image();
+rock.src = 'images/rock.png';
+var scissors = new Image();
+scissors.src = 'images/scissors.png';
+var paper = new Image();
+paper.src = 'images/paper.png';
+
 //Selects all buttons and add thems to array. Query selecter returns an array of objects selected
 //Selects them as they appear on page
+var pScore = 0;
+var cScore = 0;
 var btn = document.querySelectorAll("button");
 //Assign Event Listeners
 btn[0].addEventListener('click', function(e){playGame(0)})
@@ -31,6 +40,8 @@ function playGame(playerChoice){
             {
                 //tie
                 ctx.fillText("Player: Rock, Cpu: Rock, Tie", canvas.width/2, canvas.height/2);
+                ctx.drawImage(rock, 200, canvas.height/2, 300, 300);
+                ctx.drawImage(rock, 600, canvas.height/2, 300, 300);
             }
             else if(cpuChoice == 1){
                 //Cpu Wins
