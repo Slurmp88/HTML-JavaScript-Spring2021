@@ -52,10 +52,10 @@ btn[3].addEventListener('click', function(e){reset()})
 gameStates[0] = function(){ //<-- this is a call back function
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-    ctx.fillStyle = "yellow"
+    ctx.fillStyle = "#57d3f2"
     ctx.textAlign = "center"
     ctx.font = "60px Arial"
-    ctx.fillText("Untitled HTML Game", canvas.width/2, canvas.height/2)
+    ctx.fillText("ROCK PAPER SCISSORS", canvas.width/2, canvas.height/2)
     ctx.font = "20px Arial"
     ctx.fillText("(Press Space to Continue)", canvas.width/2, canvas.height/1.8)
 }
