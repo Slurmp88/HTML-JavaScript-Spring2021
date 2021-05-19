@@ -4,7 +4,7 @@ var ctx = canvas.getContext('2d');
 var timer = requestAnimationFrame(main);
 
 //Game States
-var gameStates = [0,1];
+var gameStates = [0,1,2];
 var currentState = 0;
 
 //Array of Choices
@@ -36,13 +36,7 @@ function reset(){
 
 //Event Listeners
 document.addEventListener("keydown", keyPressDown)
-function keyPressDown(e){
-    console.log(e.keyCode)
-    if(e.keyCode == "32"){
-        currentState = 1;
-        console.log(currentState)
-    }
-}
+
 btn[0].addEventListener('click', function(e){playGame(0)})
 btn[1].addEventListener('click', function(e){playGame(1)})
 btn[2].addEventListener('click', function(e){playGame(2)})
@@ -60,9 +54,22 @@ gameStates[0] = function(){ //<-- this is a call back function
     ctx.fillText("(Press Space to Continue)", canvas.width/2, canvas.height/1.8)
 }
 
+function keyPressDown(e){
+    console.log(e.keyCode)
+    if(e.keyCode == "32"){
+        currentState = 1;
+        console.log(currentState)
+        main();
+    }
+}
+
 gameStates[1] = function(){ //<-- this is a call back function
     ctx.clearRect(0,0,canvas.width,canvas.height)
     main();
+}
+
+gameStates[2] = function(){ //<-- this is a call back function
+
 }
 
 function playGame(playerChoice){
@@ -161,18 +168,14 @@ function playGame(playerChoice){
 
 function main()
 {
-
     //Call Game State
-    gameStates[currentState]()
-
+    if(gameStates == 1)
+    {
+        gameStates[1];
+    }
+    else{
+        gameStates[currentState]()
+    }
     //Reset Window
     timer = requestAnimationFrame(main);
-}
-
-function showResults(pChoice, cChoice, result)
-{
-    document.getElementById("pChoice").innerHTML = pChoice;
-    document.getElementById("cChoice").innerHTML = cChoice;
-    document.getElementById("result").innerHTML = result;
-    //Shows player results
 }
