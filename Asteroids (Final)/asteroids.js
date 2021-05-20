@@ -5,7 +5,10 @@ var timer = requestAnimationFrame(main);
 
 //creating an instance of a ship (Instantiation)
 var ship;
-ship = new PlayerShip();
+
+//score
+var score = 0;
+var highScore = 0;
 
 //Game States
 var gameStates = [];
@@ -19,6 +22,18 @@ var asteroids = [];
 
 function randRange(high, low){
     return Math.random() * (high - low) + low;
+}
+
+function gameStart(){
+    //creating an instance of a ship (Instantiation)
+    ship = new PlayerShip();
+
+    //Create Asteroids
+    for(var i = 0; i < numAsteroids; i++){
+        asteroids[i] = new Asteroid();
+    }
+
+
 }
 
 //Constructor Function
@@ -38,11 +53,6 @@ function Asteroid(){
         ctx.fill();
         ctx.restore();
     }
-}
-
-//Create Asteroids
-for(var i = 0; i < numAsteroids; i++){
-    asteroids[i] = new Asteroid();
 }
 
 //keyboard Event Listeners
@@ -70,14 +80,22 @@ function pressKeyDown(e){
         if(e.keyCode == 32)
         {
             if(currentState == 2)
-            {
+            {   
+                //Resets game state, resets number of asteroids, emptys asteroids array so they can be reassigned and respawned.
                 currentState = 0;
+                numAsteroids = 20;
+                asteroids = [];
+                gameStart();
                 main();
             }
             else{
+                //Starts Game (For First Time)
+                gameStart();
                 currentState = 1;
                 gameOver = false;
                 main();
+                score = 0;
+                scoreTimer();
             }
         }
     }
@@ -189,11 +207,19 @@ gameStates[0] = function(){
     ctx.fillText('Asteroid Avoider', canvas.width/2,canvas.height/2-60)
     ctx.font = "20px Arial"
     ctx.fillText('Press Space to Play', canvas.width/2,canvas.height/2)
+    ctx.fillText("High Score: " + highScore, canvas.width/2,canvas.height/2 + 100)
     ctx.restore();
 }
 //Game Screen 
 gameStates[1] = function()
 {
+    //Score Code
+    ctx.save();
+    ctx.font = "15px arial";
+    ctx.fillStyle = "white";
+    ctx.fillText("Score: " + score + "  Asteroids: " + numAsteroids, canvas.width - 170, 20)
+    ctx.restore();
+
     //VERT
     if(ship.up){
         ship.vy = -8;
@@ -223,7 +249,7 @@ gameStates[1] = function()
         var dy = ship.y - asteroids[i].y;
         var distance = Math.sqrt((dx * dx) + (dy * dy));
         
-        if(detectCollision(distance, (ship.h/2 + asteroids[i].radius))){
+        if(detectCollision(distance, (ship.h/2 - 1 + asteroids[i].radius - 1))){
             console.log("hit asteroid")
             gameOver = true;
             currentState = 2;
@@ -246,13 +272,28 @@ gameStates[1] = function()
         ship.move();
         ship.drawShip();
     }
+
+    while(asteroids.length < numAsteroids){
+        asteroids.push(new Asteroid());
+    }
 }
 //Game Over
 gameStates[2] = function(){
     ctx.save();
-    ctx.font = "60px Arial"
     ctx.fillStyle = "white"
+    ctx.font = "20px Arial"
     ctx.textAlign = "center"
+    if(score > highScore)
+    {
+        highScore = score;
+        ctx.fillText('New High Score: ' + highScore, canvas.width/2,canvas.height/2 + 50)
+    }
+    else
+    {
+        ctx.fillText('Your Score: ' + score, canvas.width/2,canvas.height/2 + 47)
+        ctx.fillText('High Score: ' + highScore, canvas.width/2,canvas.height/2 + 70)
+    }
+    ctx.font = "60px Arial"
     ctx.fillText('You Died', canvas.width/2,canvas.height/2-60)
     ctx.font = "20px Arial"
     ctx.fillText('Press Space to return to main menu', canvas.width/2,canvas.height/2)
@@ -262,10 +303,10 @@ gameStates[2] = function(){
 function main()
 {
     //clear Canvas
-    ctx.clearRect(0,0,canvas.width,canvas.height)
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
     //Call Game State
-    gameStates[currentState]()
+    gameStates[currentState]();
 
     //Reset Window
     if(!gameOver){
@@ -275,4 +316,18 @@ function main()
 
 function detectCollision(distance, calcDistance){
     return distance < calcDistance;
+}
+
+function scoreTimer()
+{
+    if(!gameOver){
+        score++;
+        //Modulus returns a remainder %
+        //check if remainder goes into 5 evenly
+        if(score % 5 == 0)
+        {
+            numAsteroids += 3;
+        }
+        setTimeout(scoreTimer, 1000);
+    }
 }
