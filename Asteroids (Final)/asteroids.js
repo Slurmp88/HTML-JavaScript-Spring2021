@@ -41,7 +41,7 @@ function Asteroid(){
     this.radius = randRange(15, 5);
     this.x = randRange(canvas.width - this.radius, this.radius) - canvas.height;
     this.y = randRange(canvas.height - this.radius, this.radius) - canvas.height;
-    this.vy = randRange(10 , 5);
+    this.vx = randRange(-10 , -5);
     this.color = "white";
 
     this.drawAsteroid = function(){
@@ -245,6 +245,7 @@ gameStates[1] = function()
     //Spawn Asteroids
     for(var i = 0; i < asteroids.length; i++)
     {
+        //Hit Detection
         var dx = ship.x - asteroids[i].x;
         var dy = ship.y - asteroids[i].y;
         var distance = Math.sqrt((dx * dx) + (dy * dy));
@@ -256,14 +257,15 @@ gameStates[1] = function()
             main();
         }
 
-        if(asteroids[i].y > canvas.height + asteroids[i].radius)
+        //Check Asteroids
+        if(asteroids[i].x < 0 + asteroids[i].radius)
         {
-            asteroids[i].x = randRange(canvas.width - asteroids[i].radius, asteroids[i].radius);
-            asteroids[i].y = randRange(canvas.height - asteroids[i].radius, asteroids[i].radius) - canvas.height;
+            asteroids[i].x = randRange(canvas.width - asteroids[i].radius, asteroids[i].radius) + canvas.width;
+            asteroids[i].y = randRange(canvas.height - asteroids[i].radius, asteroids[i].radius);
         }
         if(!gameOver)
         {
-            asteroids[i].y += asteroids[i].vy;
+            asteroids[i].x += asteroids[i].vx;
             asteroids[i].drawAsteroid();
         }
     }
