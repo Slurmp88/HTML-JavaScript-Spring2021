@@ -63,16 +63,16 @@ function pressKeyDown(e){
     if(!gameOver)
     {
         if(e.keyCode == 65 || e.keyCode == 37){
-            ship.left = true;
-        }
-        if(e.keyCode == 68 || e.keyCode == 39){
-            ship.right = true;
-        }
-        if(e.keyCode == 83 || e.keyCode == 40){
             ship.down = true;
         }
-        if(e.keyCode == 87 || e.keyCode == 38){
+        if(e.keyCode == 68 || e.keyCode == 39){
             ship.up = true;
+        }
+        if(e.keyCode == 83 || e.keyCode == 40){
+            ship.right = true;
+        }
+        if(e.keyCode == 87 || e.keyCode == 38){
+            ship.left = true;
         }
     }
     if(gameOver)
@@ -105,16 +105,16 @@ function getKeyUp(e){
     if(!gameOver)
     {
         if(e.keyCode == 65 || e.keyCode == 37){
-            ship.left = false;
-        }
-        if(e.keyCode == 68 || e.keyCode == 39){
-            ship.right = false;
-        }
-        if(e.keyCode == 83 || e.keyCode == 40){
             ship.down = false;
         }
-        if(e.keyCode == 87 || e.keyCode == 38){
+        if(e.keyCode == 68 || e.keyCode == 39){
             ship.up = false;
+        }
+        if(e.keyCode == 83 || e.keyCode == 40){
+            ship.right = false;
+        }
+        if(e.keyCode == 87 || e.keyCode == 38){
+            ship.left = false;
         }
     }
 }
@@ -132,7 +132,7 @@ function PlayerShip(){
     this.down = false;
     this.left = false;
     this.right = false;
-    this.flamelength = 30;
+    this.flamelength = -30;
 
     this.drawShip = function(){
         ctx.save();
@@ -142,19 +142,19 @@ function PlayerShip(){
         {
             ctx.save();
             //changes drawing values to animate flame.
-            if(this.flamelength == 30){
-                this.flamelength = 10;
+            if(this.flamelength == -30){
+                this.flamelength = -10;
                 ctx.fillStyle = "yellow";
             }
             else{
-                this.flamelength = 30;
+                this.flamelength = -30;
                 ctx.fillStyle = "orange";
             }
             ctx.beginPath();
-            ctx.moveTo(0, this.flamelength);
-            ctx.lineTo(5,5)
-            ctx.lineTo(-5,5)
-            ctx.lineTo(0, this.flamelength)
+            ctx.moveTo(this.flamelength, 0);
+            ctx.lineTo(-5, -5)
+            ctx.lineTo(-5, 5)
+            ctx.lineTo(this.flamelength, 0)
             ctx.closePath()
             ctx.fill();
             ctx.restore();
@@ -162,11 +162,11 @@ function PlayerShip(){
 
         ctx.fillStyle = "red";
         ctx.beginPath();
-        ctx.moveTo(0, -10);
+        ctx.moveTo(-10, 10);
+        ctx.lineTo(-5, 0);
+        ctx.lineTo(-10, -10);
+        ctx.lineTo(10, 0);
         ctx.lineTo(-10, 10);
-        ctx.lineTo(0, 5);
-        ctx.lineTo(10, 10);
-        ctx.lineTo(0, -10);
         ctx.closePath();
         ctx.fill();
         ctx.restore();
@@ -220,26 +220,28 @@ gameStates[1] = function()
     ctx.fillText("Score: " + score + "  Asteroids: " + numAsteroids, canvas.width - 170, 20)
     ctx.restore();
 
-    //VERT
+    //Horizontal
     if(ship.up){
-        ship.vy = -8;
+        ship.vx = 8;
     }
     else if(ship.down)
     {
+        ship.vx = -5;
+    }
+    else{
+        ship.vx = -3;
+    }
+    //Vert
+    if(ship.right)
+    {
         ship.vy = 8;
     }
-    else{
-        ship.vy = 3;
-    }
-    //HORIZ
-    if(ship.right){
-        ship.vx = 8;
-    }
     else if(ship.left){
-        ship.vx = -8;
+        ship.vy = -8;
     }
-    else{
-        ship.vx = 0;
+    else
+    {
+        ship.vy = 0;
     }
 
     //Spawn Asteroids
