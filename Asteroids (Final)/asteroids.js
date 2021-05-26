@@ -5,6 +5,8 @@ var timer = requestAnimationFrame(main);
 
 //creating an instance of a ship (Instantiation)
 var ship;
+var shipPng = new Image();
+shipPng.src = 'images/Ship1.png';
 
 //score
 var score = 0;
@@ -19,6 +21,10 @@ var gameOver = true;
 var numAsteroids = 20;
 var asteroids = [];
 
+//powerUp
+var powerUp = new createPowerUp();
+var isInvuln = false;
+var isPowerUp = true;
 
 function randRange(high, low){
     return Math.random() * (high - low) + low;
@@ -32,15 +38,31 @@ function gameStart(){
     for(var i = 0; i < numAsteroids; i++){
         asteroids[i] = new Asteroid();
     }
+}
 
+function createPowerUp(){
+    this.radius = 13;
+    this.x = randRange(canvas.width - this.radius, this.radius) - canvas.width;
+    this.y = randRange(canvas.height - this.radius, this.radius);
+    this.vx = randRange(-10 , -5);
+    this.color = "blue";
 
+    this.drawPowerup = function(){
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
 }
 
 //Constructor Function
 function Asteroid(){
     this.radius = randRange(15, 5);
-    this.x = randRange(canvas.width - this.radius, this.radius) - canvas.height;
-    this.y = randRange(canvas.height - this.radius, this.radius) - canvas.height;
+    this.x = randRange(canvas.width - this.radius, this.radius) - canvas.width;
+    this.y = randRange(canvas.height - this.radius, this.radius);
     this.vx = randRange(-10 , -5);
     this.color = "white";
 
@@ -160,7 +182,8 @@ function PlayerShip(){
             ctx.restore();
         }
 
-        ctx.fillStyle = "red";
+        ctx.drawImage(shipPng, -10, -10)
+        ctx.fillStyle = "rgba(255,255,255,0)";
         ctx.beginPath();
         ctx.moveTo(-10, 10);
         ctx.lineTo(-5, 0);
@@ -253,14 +276,18 @@ gameStates[1] = function()
         var distance = Math.sqrt((dx * dx) + (dy * dy));
         
         if(detectCollision(distance, (ship.h/2 - 1 + asteroids[i].radius - 1))){
-            console.log("hit asteroid")
-            gameOver = true;
-            currentState = 2;
-            main();
+            //Checks if Invuln
+            if(isInvuln == false)
+            {
+                console.log("hit asteroid")
+                gameOver = true;
+                currentState = 2;
+                main();
+            }
         }
 
         //Check Asteroids
-        if(asteroids[i].x < 0 + asteroids[i].radius)
+        if(asteroids[i].x < -asteroids[i].radius)
         {
             asteroids[i].x = randRange(canvas.width - asteroids[i].radius, asteroids[i].radius) + canvas.width;
             asteroids[i].y = randRange(canvas.height - asteroids[i].radius, asteroids[i].radius);
@@ -277,8 +304,30 @@ gameStates[1] = function()
         ship.drawShip();
     }
 
-    while(asteroids.length < numAsteroids){
-        asteroids.push(new Asteroid());
+
+    //PowerUp
+    if(isPowerUp){
+        powerUp.x += powerUp.vx;
+        powerUp.drawPowerup();
+    }
+    var pX = ship.x - powerUp.x;
+    var pY = ship.y - powerUp.y;
+    var distance = Math.sqrt((pX * pX) + (pY * pY));
+    if(detectCollision(distance, (ship.h/2 - 1 + powerUp.radius - 1))){
+        console.log("hit powerup")
+        invincible();
+        powerUp.x = randRange(canvas.width - powerUp.radius, powerUp.radius) + canvas.width;
+        powerUp.y = randRange(canvas.height - powerUp.radius, powerUp.radius);
+        powerUp.vx = randRange(-10 , -5);
+        isPowerUp = false;
+        spawnPowerup();
+    }
+    if(powerUp.x < -powerUp.radius){
+        powerUp.x = randRange(canvas.width - powerUp.radius, powerUp.radius) + canvas.width;
+        powerUp.y = randRange(canvas.height - powerUp.radius, powerUp.radius);
+        powerUp.vx = randRange(-10 , -5);
+        isPowerUp = false;
+        spawnPowerup();
     }
 }
 //Game Over
@@ -304,6 +353,8 @@ gameStates[2] = function(){
     ctx.restore();
 }
 
+
+
 function main()
 {
     //clear Canvas
@@ -311,6 +362,7 @@ function main()
 
     //Call Game State
     gameStates[currentState]();
+
 
     //Reset Window
     if(!gameOver){
@@ -320,6 +372,26 @@ function main()
 
 function detectCollision(distance, calcDistance){
     return distance < calcDistance;
+}
+
+function invincible(){
+    if(isInvuln == false){
+        isInvuln = true;
+        setTimeout(invincible, 5000)
+    }
+    else{
+        isInvuln = false;
+    }
+}
+
+function spawnPowerup(){
+    if(isPowerUp == false){
+        //isPowerUp = true;
+        setTimeout(function(){isPowerUp = true}, 10000);
+    }
+    else{
+        isPowerUp = false;
+    }
 }
 
 function scoreTimer()
