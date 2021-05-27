@@ -7,6 +7,18 @@ var timer = requestAnimationFrame(main);
 var ship;
 var shipPng = new Image();
 shipPng.src = 'images/Ship1.png';
+var asteroid = new Image();
+asteroid.src = 'images/Asteroid.png';
+var game0 = new Image();
+game0.src = 'images/title screen.jpg';
+game0.onload = function(){
+    main();
+}
+var game2 = new Image();
+game2.src = 'images/death screen.jpg';
+game2.onload = function(){
+    main();
+}
 
 //score
 var score = 0;
@@ -68,11 +80,12 @@ function Asteroid(){
 
     this.drawAsteroid = function(){
         ctx.save();
-        ctx.beginPath();
+        ctx.drawImage(asteroid,this.x - this.radius/2,this.y - this.radius/2, this.radius * 2, this.radius * 2)
+        /*ctx.beginPath();
         ctx.fillStyle = this.color;
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, true);
         ctx.closePath();
-        ctx.fill();
+        ctx.fill();*/
         ctx.restore();
     }
 }
@@ -182,6 +195,17 @@ function PlayerShip(){
             ctx.restore();
         }
 
+        if(isInvuln == true){
+            ctx.save();
+            ctx.beginPath();
+            ctx.strokeStyle = "aqua";
+            ctx.lineWidth = 2;
+            ctx.arc(-2, 0, 16, 0, 2 * Math.PI, true);
+            ctx.closePath();
+            ctx.stroke();
+            ctx.restore();
+        }
+
         ctx.drawImage(shipPng, -10, -10)
         ctx.fillStyle = "rgba(255,255,255,0)";
         ctx.beginPath();
@@ -224,11 +248,12 @@ function PlayerShip(){
 //Main Screen
 gameStates[0] = function(){
     ctx.save();
-    ctx.font = "60px Arial"
+    ctx.font = "60px Quicksand"
+    ctx.drawImage(game0,0,0,canvas.width,canvas.height)
     ctx.fillStyle = "white"
     ctx.textAlign = "center"
     ctx.fillText('Asteroid Avoider', canvas.width/2,canvas.height/2-60)
-    ctx.font = "20px Arial"
+    ctx.font = "20px Quicksand"
     ctx.fillText('Press Space to Play', canvas.width/2,canvas.height/2)
     ctx.fillText("High Score: " + highScore, canvas.width/2,canvas.height/2 + 100)
     ctx.restore();
@@ -238,7 +263,7 @@ gameStates[1] = function()
 {
     //Score Code
     ctx.save();
-    ctx.font = "15px arial";
+    ctx.font = "15px Quicksand";
     ctx.fillStyle = "white";
     ctx.fillText("Score: " + score + "  Asteroids: " + numAsteroids, canvas.width - 170, 20)
     ctx.restore();
@@ -332,9 +357,11 @@ gameStates[1] = function()
 }
 //Game Over
 gameStates[2] = function(){
+    powerUp.x = 10000;
     ctx.save();
+    ctx.drawImage(game2,0,0,canvas.width,canvas.height)
     ctx.fillStyle = "white"
-    ctx.font = "20px Arial"
+    ctx.font = "20px Quicksand"
     ctx.textAlign = "center"
     if(score > highScore)
     {
@@ -346,9 +373,9 @@ gameStates[2] = function(){
         ctx.fillText('Your Score: ' + score, canvas.width/2,canvas.height/2 + 47)
         ctx.fillText('High Score: ' + highScore, canvas.width/2,canvas.height/2 + 70)
     }
-    ctx.font = "60px Arial"
+    ctx.font = "60px Quicksand"
     ctx.fillText('You Died', canvas.width/2,canvas.height/2-60)
-    ctx.font = "20px Arial"
+    ctx.font = "20px Quicksand"
     ctx.fillText('Press Space to return to main menu', canvas.width/2,canvas.height/2)
     ctx.restore();
 }
@@ -357,6 +384,7 @@ gameStates[2] = function(){
 
 function main()
 {
+    console.log(isInvuln)
     //clear Canvas
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
