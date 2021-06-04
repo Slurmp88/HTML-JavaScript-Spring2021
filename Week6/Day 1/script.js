@@ -3,6 +3,8 @@ var ctx = canvas.getContext('2d');
 
 var gravity = 0;
 var friction = 1;
+var numParticles = 10;
+var particles = [];
 
 var cageImg = new Image();
 cageImg.src = "images/cage.png";
@@ -78,10 +80,8 @@ function GameObj(){
 //var particle = new GameObj();
 // This allows a change in syntax particle.x = 10
 //particle.drawCircle();
-
 //creating an array of particles :)
-var numParticles = 10;
-var particles = [];
+
 for(var i = 0; i < numParticles; i++){
     particles[i] = new GameObj();
 }
